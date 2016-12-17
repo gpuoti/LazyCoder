@@ -28,6 +28,34 @@ int main (int argc, char*argv[]){
 """)
 	out_file.close()
 
+def create_meta(root_folder, project_name):
+	meta_info = '''
+{
+    "NAME" : "''' + project_name + '''",
+    "VERSION" : "0.0.0",
+    
+    "DEPENDENCIES" : [
+    ],
+    
+    "__BOX_INSTRUCTIONS__" : [
+                                {   "FROM" : "include",
+                                    "TO"   : "include",
+                                    "FILTER" : "*"
+                                }    
+    ],
+    "__UNBOX_INSTRUCTIONS__" : [
+                                {   "FROM" : "include",
+                                    "TO"   : "include-ext/''' + project_name + '''",
+                                    "FILTER" : "*"
+                                }    
+    ]
+        
+    
+}
+'''
+	with open(compose_path(root_folder, "meta.json"), "w" ) as f:
+		f.write(meta_info)
+
 
             
 if __name__ == "__main__":
@@ -68,5 +96,5 @@ if __name__ == "__main__":
 		
 	
 	make_main(prjSrcBase, prjname)
-		
+	create_meta(prjPath, prjname)	
 		
