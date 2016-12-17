@@ -29,29 +29,6 @@ int main (int argc, char*argv[]){
 	out_file.close()
 
 
-def make_gradle(folder, projectName):
-	build = folder + "/build.gradle"
-	f = open(build, "w")
-	f.write ("""apply plugin: 'cpp'
-
-executables {
-	""")
-	
-	f.write(projectName)
-	f.write("""
-}
-
-sources {
-	""")
-	f.write(projectName)
-	f.write("""{
-			
-	}	
-}	""")
-	
-	f.close
-
-
             
 if __name__ == "__main__":
 	prjname = raw_input("project name: ")
@@ -59,10 +36,9 @@ if __name__ == "__main__":
 	#determining project folder
 	prjPath = os.getcwd() +"/"+ prjname
 	prjDoc = compose_path(prjPath, "doc")
-	prjSrcBase = compose_path(prjPath, "src")
-	prjSrc = compose_path(prjSrcBase, prjname)
-	prjCpp = compose_path(prjSrc, "cpp")
-	prjHeader = compose_path(prjSrc, "header")
+	prjSrcBase = compose_path(prjPath, "source")
+	prjHeader = compose_path(prjPath, "include")
+	prjHeaderEx= compose_path(prjPath, "include-ext")
 		
 	try:
 		print "creating project folder at:", prjPath
@@ -78,23 +54,19 @@ if __name__ == "__main__":
 		make_sure_path_exists(prjSrcBase)
 		print "DONE"
 		
-		print prjSrc
-		make_sure_path_exists(prjSrc)
-		print "DONE"
-		
-		print prjCpp
-		make_sure_path_exists(prjCpp)
-		print "DONE"
-				
+	
 		print prjHeader
 		make_sure_path_exists(prjHeader)
+		print "DONE"
+
+		print prjHeader
+		make_sure_path_exists(prjHeaderEx)
 		print "DONE"
 
 	except OSError as exception:	
 		print "FAIL"
 		
 	
-	make_main(prjCpp, prjname)
-	make_gradle(prjPath, prjname)
+	make_main(prjSrcBase, prjname)
 		
 		
