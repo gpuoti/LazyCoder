@@ -10,9 +10,13 @@ setup(	name='LazyCoder',
         url='',
         
         py_modules=[
-            'lazycreate_cpp_project'
+             'lazycreate_cpp_project',
+             'lazycreate_sconscript_4_cpp',
+             'lazycreate_sconstruct'
             # list them here when you add any other modules!
             ],
             
-        scripts = ['lazycreate_cpp_project.py']  
+        scripts = ['lazycreate_cpp_project.py', 
+                    'lazycreate_sconscript_4_cpp.py',
+                    'lazycreate_sconstruct.py']  
 )
