@@ -15,9 +15,11 @@ def compose_path(base, folder_name):
 	return base +"/" + folder_name            
 
 def make_main(folder, projectName):
+	pch_name = projectName + '_pch.h'
 	mainFile = folder + "/" + projectName + ".cpp"
 	out_file = open(mainFile,"w")
-	out_file.write("""
+	out_file.write('''
+#include "''' + pch_name + '''"
 #include <iostream>
 	
 using namespace std;
@@ -25,8 +27,24 @@ using namespace std;
 int main (int argc, char*argv[]){
 	return 0;
 }
-""")
+''')
 	out_file.close()
+
+def make_pch_support_files(folder, project_name):
+	pch_name = project_name + '_pch'
+	decl_file = folder + "/" + pch_name + ".h"
+	def_file = folder + "/" + pch_name + ".cpp"
+
+	with open(decl_file, 'w') as f:
+		f.write('''
+#pragma once
+
+#include <stdio.h>
+#include <tchar.h>
+''')
+
+	with open(def_file, 'w') as f:
+		f.write('#include "'+ pch_name + '.h"')
 
 def create_meta(root_folder, project_name):
 	meta_info = '''
@@ -97,4 +115,5 @@ if __name__ == "__main__":
 	
 	make_main(prjSrcBase, prjname)
 	create_meta(prjPath, prjname)	
+	make_pch_support_files(prjPath, prjname)
 		
